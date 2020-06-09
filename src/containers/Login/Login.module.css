@@ -1,0 +1,13 @@
+.Login{
+    margin: 20px auto;
+    width: 50%;
+    text-align: center;
+    box-shadow: 0 2px 3px #ccc;
+    border: 1px solid #eee;
+    padding:10px 10%;
+    box-sizing: border-box;
+}
+
+.Block{
+    display:block;
+}

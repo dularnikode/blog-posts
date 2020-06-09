@@ -1,0 +1,24 @@
+.ifNoPosts{
+    text-align: center;
+    margin:10px 20px;
+    background-color: black;
+    color:white;
+    padding: 50px 20px;
+    width:100%;
+    border-radius: 5px;
+}
+
+.Card{
+    padding:20px;
+    text-align:center;
+    text-overflow: ellipsis;
+}
+
+.Cards{
+    background-color: black;
+    margin:10px;
+    display: flex;
+    justify-content: center;
+    padding:10px 20px;
+    border-radius: 5px;
+}
