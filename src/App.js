@@ -6,7 +6,9 @@ import Layout from './components/Layout/Layout';
 import Login from './containers/Login/Login';
 import Posts from './containers/Posts/Posts';
 import Logout from './containers/Logout/Logout';
+import PostDetails from  './components/PostDetails/PostDetails';
 import { Route,Switch,Redirect,withRouter} from 'react-router-dom';
+
 class App extends Component {
   componentDidMount(){
     this.props.onTryAutoSignup();
@@ -15,17 +17,17 @@ class App extends Component {
     let routes=(
       <Switch>
         <Route path="/login" exact component={Login} />
-        <Route path="/"  exact component={Posts}/>
-        <Redirect to='/'/>
+        <Route path="/posts"  exact component={Posts}/>
+        <Redirect from="/" to="/posts"/>
       </Switch> 
     );
     if (this.props.isAuthenticated){
       routes=(
         <Switch>
-          <Route path="/posts" component={Posts} />
-          <Route path="/login" component={Login}/>
-          <Route path="/logout" component={Logout}/>
-          <Route path="/" exact component={Posts} />
+          <Route path="/posts" exact component={Posts} />
+          <Route path="/login" exact component={Login}/>
+          <Route path="/logout" exact component={Logout}/>
+          <Route path={'/posts/:id'} exact component={PostDetails}/>
         </Switch>
       );
     }

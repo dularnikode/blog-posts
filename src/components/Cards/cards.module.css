@@ -9,17 +9,26 @@
 }
 
 .Card{
-    padding:20px;
+    padding:16px;
+    padding-bottom:0px;    
     text-align:center;
     text-overflow: ellipsis;
+    width:33.33%;
 }
 
+@media (max-width:600px) {
+    .Card{
+        width:100%;
+        padding:16px 18%;
+    }
+}
 .Cards{
     background-color: black;
     margin:10px;
-    display: flex;
-    justify-content: center;
-    padding:10px 20px;
+    text-align: center;
+    /* display: flex;
+    justify-content: center; */
+    padding:30px 20px;
     border-radius: 5px;
-    min-height: 500px;
+    min-height: 450px;
 }

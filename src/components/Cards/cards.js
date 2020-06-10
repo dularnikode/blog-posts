@@ -12,8 +12,8 @@ const cards =(props)=>{
     if(props.allPosts.length > 0){
         allCards=props.allPosts.map(post=>(
         <div key={post.id} className={classes.Card}>
-            <Card  color="grey">
-                <Card.Content>
+            <Card  color="grey" >
+                <Card.Content onClick={(event)=>props.clickHandler(event,post.id)}>
                     <Card.Header>{post.title}</Card.Header>
                     <Card.Description>{post.content}</Card.Description>
                 </Card.Content>
@@ -23,12 +23,13 @@ const cards =(props)=>{
                             title={post.title}
                             content={post.content}
                             id={post.id}
+                            description={post.description}
                             inputChangedHandler={props.editInputChangedHandler}
                             updateHandler={props.onUpdateHandler}
                             /> 
                         <Button 
                             basic color='red'
-                            onClick={()=>props.deletePostHandler(post.id)}>Delete</Button>
+                            onClick={(event)=>props.deletePostHandler(event,post.id)}>Delete</Button>
                     </div>
                 </Card.Content>
             </Card>

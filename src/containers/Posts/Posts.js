@@ -1,28 +1,26 @@
 import React,{Component} from 'react';
-
 import {connect} from 'react-redux';
-
 import Modal from '../../components/Modal/CreatePostModal/CreatePostModal';
 //import classes from './Posts.module.css';
 import axios from '../../axios-posts';
 import Cards from '../../components/Cards/cards';
 import Spinner  from '../../components/Spinner/Spinner';
 import * as actions from  '../../Store/Actions/index';
+import PostDetails from '../../components/PostDetails/PostDetails';
+import { Route } from 'react-router-dom';
 class Posts extends Component {
-
     state={
         post:{
             title:'',
             content:'',
+            description:'',
             userId:''
         },
         allPosts:[],
         loading:true,
     }
-    
     token=localStorage.getItem('token');
     userId=localStorage.getItem('userId');    
-
     authtoken=this.props.isAuthenticatedToken == null ? this.token:this.props.isAuthenticatedToken;
     uid=this.props.userId ==null ? this.userId : this.props.userId;
     componentDidMount(){
@@ -55,12 +53,11 @@ class Posts extends Component {
         }
     }
 
-    deletePostHandler=(deleteId)=>{
-        console.log(deleteId);
+    deletePostHandler=(event,deleteId)=>{
         if(window.confirm('Do you really want to delete this post?')){
             axios.delete(`posts/${deleteId}.json?auth=${this.authtoken}`)
             .then(response=>{
-                alert("Post deleted sucessfully");
+                alert("Post deleted sucessfully !");
                 let postsAfterDelete=this.state.allPosts;
                 let toDeleteIndex=postsAfterDelete.findIndex((post)=>{
                     if(post!==null && post.id===deleteId){return true;}
@@ -80,26 +77,18 @@ class Posts extends Component {
         this.setState({post:updatedPost});
     }
 
-
-    postDataHandler=()=>{
+    postDataHandler=(event)=>{
         if(this.authtoken){
             const postData={...this.state.post,userId:this.props.userId};
-
-            console.log("databefore post",postData);
             axios.post('/posts.json?auth='+this.authtoken,postData)
             .then( response => {
                 alert("Post added successfully !");
-                console.log(response.data);
                 this.setState(prevState=>(
                     prevState.allPosts.push({...postData,id:response.data.name})
                 )); 
- 
             })
             .catch(error=>{
                 console.log(error);
-                this.setState({
-                    loading:false
-                })
             })
         }
         else{
@@ -112,28 +101,26 @@ class Posts extends Component {
         let toEditPostsArray=[...this.state.allPosts];
         let toEditIndex=toEditPostsArray.findIndex((post)=>post.id===editPostId);
         toEditPostsArray[toEditIndex][event.target.name]=event.target.value;
-        //this.toupdatePost[event.target.name]=event.target.value;
         this.setState({
-            post:toEditPostsArray[toEditIndex]
-        });
-        this.setState({
+            post:toEditPostsArray[toEditIndex],
             allPosts:toEditPostsArray
         });
     }
-
     onUpdateHandler =(event,updateId)=>{ 
         event.preventDefault();
         if(this.authtoken){
-            const updatedPost={...this.state.post};
- 
+            const updatedPost={
+                title:this.state.post.title,
+                content:this.state.post.content,
+                description:this.state.post.description,
+                userId:this.state.post.userId                
+            };
             axios.patch(`posts/${updateId}.json?auth=${this.authtoken}`,updatedPost)
             .then(response => {
                     this.setState({updatePostLoading:false});
-                    console.log(response);
                     alert("Post Edited Sucessfully");
             })
             .catch(error => {
-
                 console.log(error);
             });
         }
@@ -142,10 +129,13 @@ class Posts extends Component {
         }
         
     }
-
+    postSelectedHandler = (event,postId ) => {
+        this.props.history.push( '/posts/' + postId );
+    }
     render(){
         let cards=(
             <Cards
+            clickHandler={this.postSelectedHandler}
             deletePostHandler={this.deletePostHandler} 
             allPosts={this.state.allPosts}
             editInputChangedHandler={this.editInputChangedHandler}
@@ -156,10 +146,11 @@ class Posts extends Component {
         }
         return(
             <>
-                <Modal 
+                <Modal
                     inputChangedHandler={this.inputChangedHandler}
                     postDataHandler={this.postDataHandler}/> 
-                {cards}                   
+                {cards}  
+                <Route path={this.props.match.url+ '/:id'} component={PostDetails}/>              
             </>
         );
     }

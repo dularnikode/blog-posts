@@ -59,7 +59,7 @@ export const login=(email,password)=>{
         })
         .catch(err=>{
             console.dir(err);
-            dispatch(loginFail(err.message));
+            dispatch(loginFail(err.response.data.error));
         }
         );
     };
