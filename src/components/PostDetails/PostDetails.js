@@ -34,6 +34,7 @@ class PostDetails extends PureComponent {
         if(this.state.loadedPost!==null && !this.state.loading){
             post=(
                 <div className={classes.PostDetails}>
+                    <h2 className={classes.Title}>Post Details</h2>
                     <div className={classes.Container}>
                         <div className={classes.Heading}><h3><strong>Title : </strong></h3></div>
                         <div className={classes.Content}>{this.state.loadedPost.title}</div>

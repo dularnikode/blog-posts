@@ -23,13 +23,13 @@ class NavigationMenu extends Component {
             name='posts'
             active={activeItem === 'posts'}
             onClick={this.handleItemClick}
-            as={Link} to='/posts' exact
+            as={Link} to='/posts' exact="true"
             >Posts</Menu.Item>
             <Menu.Item
             name={auth}
             active={activeItem === auth}
             onClick={this.handleItemClick}
-            as={Link} to={auth} exact
+            as={Link} to={auth} exact="true"
             >{this.props.isLoggedIn ? 'Logout' : 'Login'}</Menu.Item>
         </Menu.Menu> 
       </Menu>
