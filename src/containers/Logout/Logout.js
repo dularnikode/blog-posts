@@ -6,9 +6,10 @@ import {connect} from 'react-redux';
 class Logout extends Component {
     componentDidMount(){
         this.props.onLogout();
+        this.props.history.push('/posts');
     }
     render(){
-        return <Redirect to="/" />;
+        return <div></div>;
     }
 }
 

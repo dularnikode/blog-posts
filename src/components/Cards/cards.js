@@ -4,7 +4,6 @@ import classes from './cards.module.css';
 import UpdatePostModal from '../Modal/UpdatePostModal/UpdatePostModal';
 const cards =(props)=>{
 
-    //let tempposts=[{content: "fdsgfdgf", title: "test", userId: "dBvDbLfE11g4TmjZlD7EDeiSlQ32", id: "-M9HvLq9mI0veIS8xPgy"},,{content: "jncweo", title: "ksdjfk", userId: "dBvDbLfE11g4TmjZlD7EDeiSlQ32", id: "-M9GSHvDg1QcBinixIyz"},{content: "dfggh", title: "dsf", userId: "dBvDbLfE11g4TmjZlD7EDeiSlQ32", id: "-M9GWoheROdYhFtfpj5N"},{content: "jskdhfj", title: "teshjkfsdkfk", userId: "dBvDbLfE11g4TmjZlD7EDeiSlQ32", id: "-M9GSFQsqZWybt3_6Sbk"},{content: "hfhjshdjh", title: "teshjk", userId: "dBvDbLfE11g4TmjZlD7EDeiSlQ32", id: "-M9GSCNOQdI6MRvY0BvU"}];
     let allCards=(
         <div className={classes.ifNoPosts}>
             <p><strong>You don't have any post. Please Add Post </strong></p>
@@ -27,7 +26,6 @@ const cards =(props)=>{
                             inputChangedHandler={props.editInputChangedHandler}
                             updateHandler={props.onUpdateHandler}
                             /> 
-                            {/*updateHandler={props.onUpdateHandler}*/}
                         <Button 
                             basic color='red'
                             onClick={()=>props.deletePostHandler(post.id)}>Delete</Button>

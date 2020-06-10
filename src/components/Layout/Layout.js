@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component} from 'react';
 import classes from './Layout.module.css';
 import {Link} from 'react-router-dom';
 import Navbar from '../../components/Navigation/Navbar/Navbar';
@@ -9,16 +9,25 @@ class Layout extends Component {
 
     state={
         visible:false,
-        screenWidth:null
+        screenWidth:window.innerWidth,
+        resize:false,
     }
-    componentWillMount(){
-        this.setState({
-            screenWidth:window.innerWidth
-        });
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextState.screenWidth !== this.state.screenWidth;
+    }
+
+    screenSizeChangeHandler(){
+            let width = window.innerWidth;
+            window.addEventListener('resize', ()=>{
+               if (window.innerWidth !== width) {
+                this.setState({screenWidth:window.innerWidth});
+               }
+            });
     };
     render () {
         let menu=(<Navbar/>);
-        if(this.state.screenWidth<=500){
+        this.screenSizeChangeHandler();
+        if(this.state.screenWidth<=600){
             menu=(
                 <Menu inverted attached="top">
                     <Menu.Item inverted="true" secondary="true" onClick={() => this.setState({ visible: !this.state.visible })} >
@@ -31,7 +40,7 @@ class Layout extends Component {
             <>  
                 {menu}
                 <Sidebar.Pushable inverted
-                    as={Segment}  >
+                    as={Segment}>
                 <Sidebar 
                     as={Menu}
                     animation="overlay" 

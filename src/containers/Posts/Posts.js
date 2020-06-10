@@ -17,7 +17,7 @@ class Posts extends Component {
             userId:''
         },
         allPosts:[],
-        loading:false,
+        loading:true,
     }
     
     token=localStorage.getItem('token');
@@ -26,16 +26,14 @@ class Posts extends Component {
     authtoken=this.props.isAuthenticatedToken == null ? this.token:this.props.isAuthenticatedToken;
     uid=this.props.userId ==null ? this.userId : this.props.userId;
     componentDidMount(){
-        
         if(this.props.isAuthenticatedToken==null){
-            this.props.onRefresh(this.token,this.userId);
+            this.setState({loading:false});
         }
-        if(this.authtoken){
+        if(this.authtoken!==null || undefined){
             this.setState({createPostLoading:true});
             const fetchqueryParams='?auth='+this.authtoken+'&orderBy="userId"&equalTo="'+this.uid+'"';
             axios.get(`/posts.json${fetchqueryParams}`)
             .then( response => {
-               
                 const fetchedPosts= [];
                 for ( let Key in response.data ) {
                     fetchedPosts.push( {
@@ -59,7 +57,7 @@ class Posts extends Component {
 
     deletePostHandler=(deleteId)=>{
         console.log(deleteId);
-        if(window.confirm('Are you sure to delete this Post ?')){
+        if(window.confirm('Do you really want to delete this post?')){
             axios.delete(`posts/${deleteId}.json?auth=${this.authtoken}`)
             .then(response=>{
                 alert("Post deleted sucessfully");
