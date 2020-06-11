@@ -4,6 +4,9 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT'; 
 
 
+export const CHANGE_ACTIVE_STATE='CHANGE_ACTIVE_STATE';
+
+
 
 
 

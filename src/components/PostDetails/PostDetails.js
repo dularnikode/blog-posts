@@ -61,7 +61,7 @@ class PostDetails extends PureComponent {
 
 const mapStateToProps=(state)=>{
     return{
-        isAuthenticatedToken:state.token
+        isAuthenticatedToken:state.auth.token
     }
 };
 

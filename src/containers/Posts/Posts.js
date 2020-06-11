@@ -158,8 +158,8 @@ class Posts extends Component {
 
 const mapStateToProps=(state)=>{
     return{
-        isAuthenticatedToken:state.token,
-        userId:state.userId,
+        isAuthenticatedToken:state.auth.token,
+        userId:state.auth.userId,
     }
 };
 const mapDispatchToProps = dispatch => {
