@@ -12,27 +12,28 @@ const cards =(props)=>{
     if(props.allPosts.length > 0){
         allCards=props.allPosts.map(post=>(
         <div key={post.id} className={classes.Card}>
-            <Card  color="grey" >
-                <Card.Content onClick={(event)=>props.clickHandler(event,post.id)}>
-                    <Card.Header>{post.title}</Card.Header>
-                    <Card.Description>{post.content}</Card.Description>
-                </Card.Content>
+            <Card  color="grey"  >
+                <Card onClick={(event)=>props.clickHandler(event,post.id)} >
+                    <Card.Content header={post.title}/>
+                    <Card.Content description={post.content}/>
+                </Card>
                 <Card.Content extra>
                     <div className='ui two buttons'>
-                        <UpdatePostModal
-                            title={post.title}
-                            content={post.content}
-                            id={post.id}
-                            description={post.description}
-                            inputChangedHandler={props.editInputChangedHandler}
-                            updateHandler={props.onUpdateHandler}
-                            /> 
-                        <Button 
-                            basic color='red'
-                            onClick={(event)=>props.deletePostHandler(event,post.id)}>Delete</Button>
+                            <UpdatePostModal
+                                title={post.title}
+                                content={post.content}
+                                id={post.id}
+                                description={post.description}
+                                inputChangedHandler={props.editInputChangedHandler}
+                                updateHandler={props.onUpdateHandler}
+                                /> 
+                            <Button 
+                                basic color='red'
+                                onClick={(event)=>props.deletePostHandler(event,post.id)}>Delete</Button>
                     </div>
                 </Card.Content>
             </Card>
+            
         </div>
     ));
     }
