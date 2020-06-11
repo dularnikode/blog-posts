@@ -41,11 +41,11 @@ class PostDetails extends PureComponent {
                     </div>
                     <div className={classes.Container}>
                     <div className={classes.Heading}><h3><strong>Content : </strong></h3></div>
-                       <div className={classes.Content}>{this.state.loadedPost.content}</div> 
+                       <div className={classes.Content}><p>{this.state.loadedPost.content}</p></div> 
                     </div>
                     <div className={classes.Container}>
                     <div className={classes.Heading}><h3><strong>Description : </strong></h3></div>
-                       <div className={classes.Content}>{this.state.loadedPost.description}</div> 
+                       <div className={classes.Content}><p>{this.state.loadedPost.description}</p></div> 
                     </div>
                 </div>
             );
