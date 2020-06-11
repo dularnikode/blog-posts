@@ -6,6 +6,7 @@ import * as actions from '../../Store/Actions/index';
 import {connect} from 'react-redux';
 import Spinner from '../../components/Spinner/Spinner';
 import * as actionTypes from '../../Store/Actions/actionTypes';
+
 class  Login extends Component{
 
     state = {
@@ -26,10 +27,11 @@ class  Login extends Component{
             }
         }
     }
+
+    componentDidMount(){
+        this.props.onRefresh("login");
+    }
    
-
-
-
     inputChangedHandler=(event)=>{
         const updatedControls = {
             ...this.state.controls,
@@ -49,7 +51,6 @@ class  Login extends Component{
 
     
     render(){
-        this.props.onRefresh("login");
         let errorMessage=null;
         if(this.props.error){
             errorMessage=(
@@ -61,10 +62,10 @@ class  Login extends Component{
 
         let authRedirect = null;
         if (this.props.isAuthenticated){
-            authRedirect=(<Redirect to='/posts'/>);
+            authRedirect=(<Redirect from="/login" to='/posts'/>);
         }
         let login=(
-            <Form size='large' onSubmit={this.onSubmitHandler}>
+            <Form size='large' onSubmit={(event)=>this.onSubmitHandler(event)}>
                     <Segment stacked>
                     <Form.Input 
                         fluid icon='user' iconPosition='left' 
@@ -92,8 +93,9 @@ class  Login extends Component{
         }
 
         return (
-            <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
-                <Grid.Column style={{ maxWidth: 450 }}>
+        <>
+            <Grid textAlign='center' style={{ height: '550px' }} verticalAlign='middle'>
+                <Grid.Column style={{ maxWidth:450 }}>
                 {authRedirect}
                 <Header as='h2' color='black' textAlign='center'>
                     Login to your Blog
@@ -101,6 +103,7 @@ class  Login extends Component{
                 {login}
                 </Grid.Column>
             </Grid>
+        </>
         );
     }
 }

@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 
 class Logout extends Component {
     
-    
     componentDidMount(){
         if(window.confirm("Do you really want to logout ?")){
             this.props.onLogout();

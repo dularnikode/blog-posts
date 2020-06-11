@@ -26,6 +26,7 @@ class Posts extends Component {
     authtoken=this.props.isAuthenticatedToken == null ? this.token:this.props.isAuthenticatedToken;
     uid=this.props.userId ==null ? this.userId : this.props.userId;
     componentDidMount(){
+        this.props.onLoad("posts");
         if(this.props.isAuthenticatedToken==null){
             this.setState({loading:false});
         }
@@ -62,7 +63,9 @@ class Posts extends Component {
                 alert("Post deleted sucessfully !");
                 let postsAfterDelete=this.state.allPosts;
                 let toDeleteIndex=postsAfterDelete.findIndex((post)=>{
-                    if(post!==null && post.id===deleteId){return true;}
+                    let del=false;
+                    if(post!==null && post.id===deleteId){del=true}
+                    return del;
                 });
                 postsAfterDelete.splice(toDeleteIndex,1);
                 this.setState({allPosts:postsAfterDelete});
@@ -135,7 +138,7 @@ class Posts extends Component {
         this.props.history.push( '/posts/' + postId );
     }
     render(){
-        this.props.onLoad("posts");
+        
         let cards=(
             <Cards
             isLoggedIn={this.props.isAuthenticatedToken !==null }

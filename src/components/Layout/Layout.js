@@ -1,10 +1,12 @@
-import React, {PureComponent} from 'react';
+import React, {PureComponent, Suspense} from 'react';
 import classes from './Layout.module.css';
 import {Link} from 'react-router-dom';
 import Navbar from '../../components/Navigation/Navbar/Navbar';
 import {Icon, Menu, Segment, Sidebar } from 'semantic-ui-react';
 import {connect} from 'react-redux';
 import * as actionTypes from '../../Store/Actions/actionTypes';
+
+import Spinner from '../Spinner/Spinner';
 class Layout extends PureComponent {
 
     state={
@@ -77,9 +79,11 @@ class Layout extends PureComponent {
                     </Sidebar>
                 <Sidebar.Pusher inverted="true" dimmed={this.state.visible}>
                 <Segment textAlign="center">
-                    <main className={classes.Content}>
-                        {this.props.children}
-                    </main>
+                    <Suspense fallback={<Spinner/>}>
+                        <main className={classes.Content}>
+                            {this.props.children}
+                        </main>
+                    </Suspense>
                 </Segment>
                 </Sidebar.Pusher>
                 </Sidebar.Pushable>

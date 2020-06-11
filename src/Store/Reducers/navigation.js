@@ -1,5 +1,4 @@
 import * as actionTypes from '../Actions/actionTypes';
-//import {updateObject} from '../../Shared/Utility';
 
 const initialState={
     activeState:'posts'

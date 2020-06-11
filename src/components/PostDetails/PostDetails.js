@@ -1,15 +1,13 @@
-import React,{ PureComponent } from 'react';
+import React,{PureComponent } from 'react';
 import classes from './PostDetails.module.css';
 import axios from '../../axios-posts';
 import {connect} from 'react-redux';
 import Spinner from '../../components/Spinner/Spinner';
 class PostDetails extends PureComponent {
-
     state={
         loadedPost:null,
         loading:true
     }
-
     componentDidMount(){
         this.loadPost();
     }
@@ -28,7 +26,6 @@ class PostDetails extends PureComponent {
             })
         }
     }
-
     render () {
         let post=<Spinner/>;
         if(this.state.loadedPost!==null && !this.state.loading){
