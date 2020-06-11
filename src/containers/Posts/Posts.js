@@ -8,6 +8,8 @@ import Spinner  from '../../components/Spinner/Spinner';
 import * as actions from  '../../Store/Actions/index';
 import PostDetails from '../../components/PostDetails/PostDetails';
 import { Route } from 'react-router-dom';
+import * as actionTypes from '../../Store/Actions/actionTypes';
+
 class Posts extends Component {
     state={
         post:{
@@ -133,8 +135,10 @@ class Posts extends Component {
         this.props.history.push( '/posts/' + postId );
     }
     render(){
+        this.props.onLoad("posts");
         let cards=(
             <Cards
+            isLoggedIn={this.props.isAuthenticatedToken !==null }
             clickHandler={this.postSelectedHandler}
             deletePostHandler={this.deletePostHandler} 
             allPosts={this.state.allPosts}
@@ -147,6 +151,7 @@ class Posts extends Component {
         return(
             <>
                 <Modal
+                    isLoggedIn={this.props.isAuthenticatedToken!==null}
                     inputChangedHandler={this.inputChangedHandler}
                     postDataHandler={this.postDataHandler}/> 
                 {cards}  
@@ -164,7 +169,8 @@ const mapStateToProps=(state)=>{
 };
 const mapDispatchToProps = dispatch => {
     return {
-        onRefresh:(token,userId)=>dispatch( actions.relogAfterRefresh(token,userId))
+        onRefresh:(token,userId)=>dispatch( actions.relogAfterRefresh(token,userId)),
+        onLoad:(activeMenu)=>dispatch({type:actionTypes.CHANGE_ACTIVE_STATE,ActiveState:activeMenu})
     };
 };
 export default connect(mapStateToProps,mapDispatchToProps)(Posts);

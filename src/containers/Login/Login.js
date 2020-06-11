@@ -5,7 +5,7 @@ import {checkValidity} from '../../Shared/Utility';
 import * as actions from '../../Store/Actions/index';
 import {connect} from 'react-redux';
 import Spinner from '../../components/Spinner/Spinner';
-
+import * as actionTypes from '../../Store/Actions/actionTypes';
 class  Login extends Component{
 
     state = {
@@ -49,9 +49,8 @@ class  Login extends Component{
 
     
     render(){
-
+        this.props.onRefresh("login");
         let errorMessage=null;
-
         if(this.props.error){
             errorMessage=(
             <p style={{
@@ -116,7 +115,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: ( email, password) => dispatch( actions.login( email, password) )
+        onAuth: ( email, password) => dispatch( actions.login( email, password) ),
+        onRefresh:(activeMenu)=>dispatch({type:actionTypes.CHANGE_ACTIVE_STATE,ActiveState:activeMenu})
     };
 };
+
+
+      
 export default connect(mapStateToProps,mapDispatchToProps)(Login);

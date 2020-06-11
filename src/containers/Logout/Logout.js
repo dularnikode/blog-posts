@@ -3,9 +3,14 @@ import * as actions from '../../Store/Actions/index';
 import {connect} from 'react-redux';
 
 class Logout extends Component {
+    
+    
     componentDidMount(){
-        this.props.onLogout();
-        this.props.history.push('/posts');
+        if(window.confirm("Do you really want to logout ?")){
+            this.props.onLogout();
+        }else{
+            this.props.history.replace('/posts');
+        }    
     }
     render(){
         return <div></div>;

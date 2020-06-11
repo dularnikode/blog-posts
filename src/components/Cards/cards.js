@@ -4,9 +4,10 @@ import classes from './cards.module.css';
 import UpdatePostModal from '../Modal/UpdatePostModal/UpdatePostModal';
 const cards =(props)=>{
 
-    let allCards=(
+    let allCards=null;
+    allCards=(
         <div className={classes.ifNoPosts}>
-            <p><strong>You don't have any post. Please Add Post </strong></p>
+            <p><strong>{props.isLoggedIn ? "You don't have any post. Please Add Post" :"Please login to see your Posts"} </strong></p>
         </div>
     );
     if(props.allPosts.length > 0){
