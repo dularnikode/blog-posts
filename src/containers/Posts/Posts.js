@@ -1,15 +1,13 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import Modal from '../../components/Modal/CreatePostModal/CreatePostModal';
-//import classes from './Posts.module.css';
-import axios from '../../axios-posts';
 import Cards from '../../components/Cards/cards';
 import Spinner  from '../../components/Spinner/Spinner';
 import * as actions from  '../../Store/Actions/index';
 import PostDetails from '../../components/PostDetails/PostDetails';
 import { Route } from 'react-router-dom';
 import * as actionTypes from '../../Store/Actions/actionTypes';
-
+import {deletePost,createPost,updatePost,fetchAllPosts} from '../../axios-helper';
 import {postValidation} from '../../Shared/Utility';
 
 class Posts extends Component {
@@ -36,8 +34,8 @@ class Posts extends Component {
         }
         if(this.authtoken!==null || undefined){
             this.setState({createPostLoading:true});
-            const fetchqueryParams='?auth='+this.authtoken+'&orderBy="userId"&equalTo="'+this.uid+'"';
-            axios.get(`/posts.json${fetchqueryParams}`)
+
+            fetchAllPosts(this.authtoken,this.uid)
             .then( response => {
                 const fetchedPosts= [];
                 for ( let Key in response.data ) {
@@ -62,7 +60,7 @@ class Posts extends Component {
 
     deletePostHandler=(event,deleteId)=>{
         if(window.confirm('Do you really want to delete this post?')){
-            axios.delete(`posts/${deleteId}.json?auth=${this.authtoken}`)
+            deletePost(this.authtoken,deleteId)
             .then(response=>{
                 alert("Post deleted sucessfully !");
                 let postsAfterDelete=this.state.allPosts;
@@ -91,8 +89,7 @@ class Posts extends Component {
             if(postValidation(this.state.post)){
                 const postData={...this.state.post,userId:this.props.userId};
 
-
-                axios.post('/posts.json?auth='+this.authtoken,postData)
+                createPost(this.authtoken,postData)
                 .then( response => {
                     alert("Post added successfully !");
                     this.setState(prevState=>(
@@ -137,7 +134,7 @@ class Posts extends Component {
                 userId:this.state.post.userId                
             };
             if(postValidation(updatedPost)){
-                axios.patch(`posts/${updateId}.json?auth=${this.authtoken}`,updatedPost)
+                updatePost(this.authtoken,updateId,updatedPost)
                 .then(response => {
                         this.setState({errorMessage:''});
                         alert("Post Edited Sucessfully");

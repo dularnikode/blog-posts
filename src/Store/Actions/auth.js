@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import axios from 'axios';
+import {loginToBlogPost} from '../../axios-helper';
 export const loginStart = () =>{
     return {
         type:actionTypes.LOGIN_START
@@ -47,8 +47,8 @@ export const login=(email,password)=>{
             returnSecureToken:true
         };
 
-        const url='https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD_EX_2mlQiXSteqNxe6fPjEfsECnAlNkc';
-        axios.post(url,authData)
+        
+        loginToBlogPost(authData)
         .then(response=>{
             const expirationDate = new Date(new Date().getTime() + response.data.expiresIn*1000);
             localStorage.setItem('token',response.data.idToken);
