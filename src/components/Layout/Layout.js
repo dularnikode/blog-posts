@@ -23,7 +23,10 @@ class Layout extends PureComponent {
             let width = window.innerWidth;
             window.addEventListener('resize', ()=>{
                if (window.innerWidth !== width) {
-                this.setState({screenWidth:window.innerWidth});
+                    this.setState({screenWidth:window.innerWidth});
+               }
+               if(window.innerWidth>600){
+                   this.setState({visible:false});
                }
             });
     };
@@ -46,7 +49,6 @@ class Layout extends PureComponent {
         );
         this.screenSizeChangeHandler();
         if(this.state.screenWidth>600){
-            
             menu=(<Navbar/>);
         }
         
