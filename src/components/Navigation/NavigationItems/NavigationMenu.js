@@ -25,7 +25,7 @@ class NavigationMenu extends Component {
             name={auth}
             active={isActive === auth}
             onClick={(event)=>this.props.onActiveChange(event,auth)}
-            as={Link} to={auth} exact="true"
+            as={Link} to={'/'+auth} exact={auth==='logout'? "false":"true"}
             >{this.props.isLoggedIn ? 'Logout' : 'Login'}</Menu.Item>
         </Menu.Menu> 
       </Menu>

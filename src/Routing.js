@@ -19,7 +19,11 @@ let onAuthRoute=[];
 let notAuthRoute=[];
 for(let i=0;i<routeArr.length;i++){
   if(routeArr[i].showOnAuth){
-    onAuthRoute.push(<Route key={i} path={routeArr[i].to} exact component={routeArr[i].component}/>)
+    if(routeArr[i].path==='/logout'){
+      onAuthRoute.push(<Route key={i} path={routeArr[i].to} component={routeArr[i].component}/>)
+    }else{
+      onAuthRoute.push(<Route key={i} path={routeArr[i].to} exact component={routeArr[i].component}/>)
+    }
   }
   if(routeArr[i].showNotAuth){
     notAuthRoute.push(<Route key={i} path={routeArr[i].to} exact component={routeArr[i].component}/>)
