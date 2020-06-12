@@ -21,6 +21,8 @@ const cards =(props)=>{
                 <Card.Content extra>
                     <div className='ui two buttons'>
                             <UpdatePostModal
+
+                                errorMessage={props.errorMessage}
                                 title={post.title}
                                 content={post.content}
                                 id={post.id}

@@ -5,8 +5,10 @@ class EditModal extends Component{
   closeModal=()=>( this.setState({ open: false }));
   openModel=()=>(this.setState({open:true}));
   onUpdateHandler(event,id){
-    this.props.updateHandler(event,id);
-    this.closeModal();
+    let Error=this.props.updateHandler(event,id);
+    if(Error){
+      this.closeModal();
+    }
   }
   render(){
     const open=this.state.open;
@@ -20,10 +22,14 @@ class EditModal extends Component{
         <Header content='Edit Post'/>
         <Modal.Content>
             <Form>
-                <Form.Input label="Title"   onChange={(event)=>this.props.inputChangedHandler(event,this.props.id)} value={this.props.title} name="title" />
-                <Form.Input label="Content"   onChange={(event)=>this.props.inputChangedHandler(event,this.props.id)} value={this.props.content} name="content"/>
-                <Form.TextArea label="Description"   onChange={(event)=>this.props.inputChangedHandler(event,this.props.id)} value={this.props.description} name="description"/>
+                <Form.Input label="Title"   onChange={(event)=>this.props.inputChangedHandler(event,this.props.id)} value={this.props.title} name="title" required/>
+                <Form.Input label="Content"   onChange={(event)=>this.props.inputChangedHandler(event,this.props.id)} value={this.props.content} name="content" required/>
+                <Form.TextArea label="Description"   onChange={(event)=>this.props.inputChangedHandler(event,this.props.id)} value={this.props.description} name="description" required/>
             </Form>
+            <p style={{
+                marginTop:'15px',
+                color:'red'
+            }}>{this.props.errorMessage}</p>
         </Modal.Content>
         <Modal.Actions>
           <Button color='red' onClick={this.closeModal}>

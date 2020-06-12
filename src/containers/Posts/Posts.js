@@ -10,6 +10,8 @@ import PostDetails from '../../components/PostDetails/PostDetails';
 import { Route } from 'react-router-dom';
 import * as actionTypes from '../../Store/Actions/actionTypes';
 
+import {postValidation} from '../../Shared/Utility';
+
 class Posts extends Component {
     state={
         post:{
@@ -19,7 +21,9 @@ class Posts extends Component {
             userId:''
         },
         allPosts:[],
-        loading:true,
+        loading:true, 
+        errorMessage:''
+           
     }
     token=localStorage.getItem('token');
     userId=localStorage.getItem('userId');    
@@ -84,19 +88,31 @@ class Posts extends Component {
 
     postDataHandler=(event)=>{
         if(this.authtoken){
-            const postData={...this.state.post,userId:this.props.userId};
-            axios.post('/posts.json?auth='+this.authtoken,postData)
-            .then( response => {
-                alert("Post added successfully !");
-                this.setState(prevState=>(
-                    prevState.allPosts.push({...postData,id:response.data.name})
-                )); 
-            })
-            .catch(error=>{
-                console.log(error);
-            })
-        }
-        else{
+            if(postValidation(this.state.post)){
+                const postData={...this.state.post,userId:this.props.userId};
+
+
+                axios.post('/posts.json?auth='+this.authtoken,postData)
+                .then( response => {
+                    alert("Post added successfully !");
+                    this.setState(prevState=>(
+                        prevState.allPosts.push({...postData,id:response.data.name})
+                    )); 
+                    this.setState({
+                        errorMessage:''
+                    });
+                })
+                .catch(error=>{
+                    console.log(error);
+                })    
+                return true;
+            }else{
+                this.setState({
+                        errorMessage:"* Please fill required details"
+                    });
+                return false;
+            }   
+        }else{
             this.props.history.push('/login');
         }
     }
@@ -120,14 +136,24 @@ class Posts extends Component {
                 description:this.state.post.description,
                 userId:this.state.post.userId                
             };
-            axios.patch(`posts/${updateId}.json?auth=${this.authtoken}`,updatedPost)
-            .then(response => {
-                    this.setState({updatePostLoading:false});
-                    alert("Post Edited Sucessfully");
-            })
-            .catch(error => {
-                console.log(error);
-            });
+            if(postValidation(updatedPost)){
+                axios.patch(`posts/${updateId}.json?auth=${this.authtoken}`,updatedPost)
+                .then(response => {
+                        this.setState({errorMessage:''});
+                        alert("Post Edited Sucessfully");
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+                return true;
+            }
+            else{
+                this.setState({
+                    errorMessage:"* Please fill required details"
+                });
+                return false;
+            }
+            
         }
         else{
             this.props.history.push('/login');
@@ -141,6 +167,7 @@ class Posts extends Component {
         
         let cards=(
             <Cards
+            errorMessage={this.state.errorMessage}
             isLoggedIn={this.props.isAuthenticatedToken !==null }
             clickHandler={this.postSelectedHandler}
             deletePostHandler={this.deletePostHandler} 
@@ -154,6 +181,7 @@ class Posts extends Component {
         return(
             <>
                 <Modal
+                    errorMessage={this.state.errorMessage}
                     isLoggedIn={this.props.isAuthenticatedToken!==null}
                     inputChangedHandler={this.inputChangedHandler}
                     postDataHandler={this.postDataHandler}/> 

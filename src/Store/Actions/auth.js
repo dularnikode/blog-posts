@@ -1,6 +1,5 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
-
 export const loginStart = () =>{
     return {
         type:actionTypes.LOGIN_START
@@ -47,6 +46,7 @@ export const login=(email,password)=>{
             password:password,
             returnSecureToken:true
         };
+
         const url='https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD_EX_2mlQiXSteqNxe6fPjEfsECnAlNkc';
         axios.post(url,authData)
         .then(response=>{

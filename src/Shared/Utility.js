@@ -18,3 +18,11 @@ export const updateObject = (oldObject, updatedProperties) => {
         ...updatedProperties
     };
 };
+
+export const postValidation=(postData)=>{
+    let valid=false;
+    if(postData.title !=='' && postData.content !=='' && postData.description !==''){
+        valid=true
+    }
+    return valid;
+}

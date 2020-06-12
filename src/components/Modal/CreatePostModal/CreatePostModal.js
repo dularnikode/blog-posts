@@ -29,8 +29,11 @@ class CreatePostModal extends Component{
   };
 
   onSaveHandler(event){
-    this.props.postDataHandler(event);
-    this.closeModal();
+    let Error=this.props.postDataHandler(event);
+    if(Error){
+      this.closeModal();
+    }
+    
   }
   render(){
     const open =this.state.open;
@@ -51,10 +54,14 @@ class CreatePostModal extends Component{
       <Header content='Create Post'/>
       <Modal.Content>
           <Form>
-              <Form.Input name="title" placeholder="Title" onChange={this.props.inputChangedHandler} />
-              <Form.Input name="content" placeholder="Content" onChange={this.props.inputChangedHandler}/>
-              <Form.TextArea name="description" placeholder="Description" onChange={this.props.inputChangedHandler}/>
+              <Form.Input label="Title" name="title" placeholder="Title" onChange={this.props.inputChangedHandler} required />
+              <Form.Input label="Content" name="content" placeholder="Content" onChange={this.props.inputChangedHandler} required/>
+              <Form.TextArea label="Description" name="description" placeholder="Description" onChange={this.props.inputChangedHandler} required/>
           </Form>
+          <p style={{
+                marginTop:'15px',
+                color:'red'
+            }}>{this.props.errorMessage}</p>
       </Modal.Content>
       <Modal.Actions>
         <Button color='red' onClick={this.closeModal}>
