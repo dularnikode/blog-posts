@@ -12,20 +12,6 @@ const routeArr=[
 let onAuthRoute=[];
 let notAuthRoute=[];
 
-
-// for(let i=0;i<routeArr.length;i++){
-//   if(routeArr[i].showOnAuth){
-//     if(routeArr[i].to === '/logout'){
-//       onAuthRoute.push(<Route key={i} path={routeArr[i].to} render={()=>{const Lazy=React.lazy(()=>(import(`${routeArr[i].path}`)));return(<Lazy/>);}}/>)
-//     }else{
-//       onAuthRoute.push(<Route key={i} path={routeArr[i].to} exact render={()=>{const Lazy=React.lazy(()=>(import(`${routeArr[i].path}`)));return(<Lazy/>);}}/>)
-//     }
-//   }
-//   if(routeArr[i].showNotAuth){
-//     notAuthRoute.push(<Route key={i} path={routeArr[i].to} exact render={()=>{const Lazy=React.lazy(()=>(import(`${routeArr[i].path}`)));return(<Lazy/>);}}/>)
-//   }
-// }
-
 class Routing extends PureComponent{
 
   renderRoute(){
