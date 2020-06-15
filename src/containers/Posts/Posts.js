@@ -4,8 +4,6 @@ import Modal from '../../components/Modal/CreatePostModal/CreatePostModal';
 import Cards from '../../components/Cards/cards';
 import Spinner  from '../../components/Spinner/Spinner';
 import * as actions from  '../../Store/Actions/index';
-import PostDetails from '../../components/PostDetails/PostDetails';
-import { Route } from 'react-router-dom';
 import * as actionTypes from '../../Store/Actions/actionTypes';
 import {deletePost,createPost,updatePost,fetchAllPosts} from '../../axios-helper';
 import {postValidation} from '../../Shared/Utility';
@@ -182,8 +180,7 @@ class Posts extends Component {
                     isLoggedIn={this.props.isAuthenticatedToken!==null}
                     inputChangedHandler={this.inputChangedHandler}
                     postDataHandler={this.postDataHandler}/> 
-                {cards}  
-                <Route path={this.props.match.url+ '/:id'} component={PostDetails}/>              
+                {cards}              
             </>
         );
     }

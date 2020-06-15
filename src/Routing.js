@@ -1,39 +1,29 @@
 import React,{Component} from 'react';
-import Posts from './containers/Posts/Posts';
-
 import {connect} from 'react-redux';
 import {Route,Switch,Redirect} from 'react-router-dom';
 
-const importPaths={
-  loginPath:'./containers/Login/Login',
-  logoutPath:'./containers/Logout/Logout',
-  postDetailsPath:'./components/PostDetails/PostDetails',
-}
-
-const LazyLogin = React.lazy(()=>import(`${importPaths.loginPath}`));
-const LazyLogout = React.lazy(()=>import(`${importPaths.loginPath}`));
-const LazyPostDetails = React.lazy(()=>import(`${importPaths.loginPath}`));
-
 const routeArr=[
-  {to:'/posts',component:Posts,showOnAuth:true,showNotAuth:true},
-  {to:'/posts/:id',component:LazyPostDetails,showOnAuth:true,showNotAuth:false},
-  {to:'/login',component:LazyLogin,showOnAuth:true,showNotAuth:true},
-  {to:'/logout',component:LazyLogout,showOnAuth:true,showNotAuth:false}  
+  {to:'/posts',path:'./containers/Posts/Posts',showOnAuth:true,showNotAuth:true},
+  {to:'/posts/:id',path:'./components/PostDetails/PostDetails',showOnAuth:true,showNotAuth:false},
+  {to:'/login',path:'./containers/Login/Login',showOnAuth:true,showNotAuth:true},
+  {to:'/logout',path:'./containers/Logout/Logout',showOnAuth:true,showNotAuth:false}  
 ]
 
 
 let onAuthRoute=[];
 let notAuthRoute=[];
+
+
 for(let i=0;i<routeArr.length;i++){
   if(routeArr[i].showOnAuth){
-    if(routeArr[i].path==='/logout'){
-      onAuthRoute.push(<Route key={i} path={routeArr[i].to} component={routeArr[i].component}/>)
+    if(routeArr[i].to === '/logout'){
+      onAuthRoute.push(<Route key={i} path={routeArr[i].to} render={()=>{const Lazy=React.lazy(()=>(import(`${routeArr[i].path}`)));return(<Lazy/>);}}/>)
     }else{
-      onAuthRoute.push(<Route key={i} path={routeArr[i].to} exact component={routeArr[i].component}/>)
+      onAuthRoute.push(<Route key={i} path={routeArr[i].to} exact render={()=>{const Lazy=React.lazy(()=>(import(`${routeArr[i].path}`)));return(<Lazy/>);}}/>)
     }
   }
   if(routeArr[i].showNotAuth){
-    notAuthRoute.push(<Route key={i} path={routeArr[i].to} exact component={routeArr[i].component}/>)
+    notAuthRoute.push(<Route key={i} path={routeArr[i].to} exact render={()=>{const Lazy=React.lazy(()=>(import(`${routeArr[i].path}`)));return(<Lazy/>);}}/>)
   }
 }
 
