@@ -7,8 +7,6 @@ import * as actions from  '../../Store/Actions/index';
 import * as actionTypes from '../../Store/Actions/actionTypes';
 import {deletePost,createPost,updatePost,fetchAllPosts} from '../../axios-helper';
 import {postValidation} from '../../Shared/Utility';
-import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
-
 
 class Posts extends Component {
     state={
@@ -202,4 +200,4 @@ const mapDispatchToProps = dispatch => {
         onLoad:(activeMenu)=>dispatch({type:actionTypes.CHANGE_ACTIVE_STATE,ActiveState:activeMenu})
     };
 };
-export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Posts));
+export default connect(mapStateToProps,mapDispatchToProps)(Posts);

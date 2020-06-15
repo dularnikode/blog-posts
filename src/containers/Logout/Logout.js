@@ -2,9 +2,6 @@ import React,{Component} from 'react';
 import * as actions from '../../Store/Actions/index';
 import {connect} from 'react-redux';
 
-
-import {withRouter} from 'react-router-dom';
-
 class Logout extends Component {
     
     componentDidMount(){
@@ -25,4 +22,4 @@ const mapDispatchToProps = dispatch =>{
     }
 }
 
-export default withRouter(connect(null,mapDispatchToProps)(Logout));
+export default connect(null,mapDispatchToProps)(Logout);

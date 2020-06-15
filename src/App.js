@@ -3,7 +3,6 @@ import './App.css';
 import {connect} from 'react-redux';
 import * as actions from  './Store/Actions/index';
 import Layout from './components/Layout/Layout';
-import {withRouter} from 'react-router-dom';
 
 import Routing from './Routing';
 
@@ -29,4 +28,4 @@ const mapDispatchToProps= dispatch =>{
 };
 
 
-export default withRouter(connect(null,mapDispatchToProps)(App));
+export default connect(null,mapDispatchToProps)(App);

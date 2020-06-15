@@ -1,7 +1,6 @@
-import React,{Component} from 'react';
+import React,{PureComponent} from 'react';
 import {connect} from 'react-redux';
-import {Route,Switch,Redirect} from 'react-router-dom';
-
+import {Route,Switch,Redirect,withRouter} from 'react-router-dom';
 const routeArr=[
   {to:'/posts',path:'./containers/Posts/Posts',showOnAuth:true,showNotAuth:true},
   {to:'/posts/:id',path:'./components/PostDetails/PostDetails',showOnAuth:true,showNotAuth:false},
@@ -14,21 +13,38 @@ let onAuthRoute=[];
 let notAuthRoute=[];
 
 
-for(let i=0;i<routeArr.length;i++){
-  if(routeArr[i].showOnAuth){
-    if(routeArr[i].to === '/logout'){
-      onAuthRoute.push(<Route key={i} path={routeArr[i].to} render={()=>{const Lazy=React.lazy(()=>(import(`${routeArr[i].path}`)));return(<Lazy/>);}}/>)
-    }else{
-      onAuthRoute.push(<Route key={i} path={routeArr[i].to} exact render={()=>{const Lazy=React.lazy(()=>(import(`${routeArr[i].path}`)));return(<Lazy/>);}}/>)
+// for(let i=0;i<routeArr.length;i++){
+//   if(routeArr[i].showOnAuth){
+//     if(routeArr[i].to === '/logout'){
+//       onAuthRoute.push(<Route key={i} path={routeArr[i].to} render={()=>{const Lazy=React.lazy(()=>(import(`${routeArr[i].path}`)));return(<Lazy/>);}}/>)
+//     }else{
+//       onAuthRoute.push(<Route key={i} path={routeArr[i].to} exact render={()=>{const Lazy=React.lazy(()=>(import(`${routeArr[i].path}`)));return(<Lazy/>);}}/>)
+//     }
+//   }
+//   if(routeArr[i].showNotAuth){
+//     notAuthRoute.push(<Route key={i} path={routeArr[i].to} exact render={()=>{const Lazy=React.lazy(()=>(import(`${routeArr[i].path}`)));return(<Lazy/>);}}/>)
+//   }
+// }
+
+class Routing extends PureComponent{
+
+  renderRoute(){
+    for(let i=0;i<routeArr.length;i++){
+      if(routeArr[i].showOnAuth){
+        if(routeArr[i].to === '/logout'){
+          onAuthRoute.push(<Route key={i} path={routeArr[i].to} render={()=>{const Lazy=React.lazy(()=>(import(`${routeArr[i].path}`)));return(<Lazy {...this.props}/>);}}/>)
+        }else{
+          onAuthRoute.push(<Route key={i} path={routeArr[i].to} exact render={()=>{const Lazy=React.lazy(()=>(import(`${routeArr[i].path}`)));return(<Lazy {...this.props}/>);}}/>)
+        }
+      }
+      if(routeArr[i].showNotAuth){
+        notAuthRoute.push(<Route key={i} path={routeArr[i].to} exact render={()=>{const Lazy=React.lazy(()=>(import(`${routeArr[i].path}`)));return(<Lazy{...this.props}/>);}}/>)
+      }
     }
   }
-  if(routeArr[i].showNotAuth){
-    notAuthRoute.push(<Route key={i} path={routeArr[i].to} exact render={()=>{const Lazy=React.lazy(()=>(import(`${routeArr[i].path}`)));return(<Lazy/>);}}/>)
-  }
-}
-
-class Routing extends Component{
+  
     render(){
+      this.renderRoute();
       let routes=(
       <Switch>
         {notAuthRoute}
@@ -55,5 +71,5 @@ class Routing extends Component{
     };
   };
 
-  export default connect(mapStateToProps)(Routing);
+  export default withRouter(connect(mapStateToProps)(Routing));
 
