@@ -14,7 +14,7 @@ const cards =(props)=>{
         allCards=props.allPosts.map(post=>(
         <div key={post.id} className={classes.Card}>
             <Card  color="grey"  >
-                <Card onClick={(event)=>props.clickHandler(event,post.id)} >
+                <Card onClick={(event)=>props.clickHandler(event,post.id)} title="click for more details">
                     <Card.Content header={post.title}/>
                     <Card.Content description={post.content}/>
                 </Card>
