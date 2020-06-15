@@ -3,6 +3,7 @@ import classes from './PostDetails.module.css';
 import axios from '../../axios-posts';
 import {connect} from 'react-redux';
 import Spinner from '../../components/Spinner/Spinner';
+import {withRouter} from 'react-router-dom';
 class PostDetails extends PureComponent {
     state={
         loadedPost:null,
@@ -62,4 +63,4 @@ const mapStateToProps=(state)=>{
     }
 };
 
-export default connect(mapStateToProps)(PostDetails);
+export default withRouter(connect(mapStateToProps)(PostDetails));

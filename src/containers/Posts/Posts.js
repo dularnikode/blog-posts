@@ -7,6 +7,8 @@ import * as actions from  '../../Store/Actions/index';
 import * as actionTypes from '../../Store/Actions/actionTypes';
 import {deletePost,createPost,updatePost,fetchAllPosts} from '../../axios-helper';
 import {postValidation} from '../../Shared/Utility';
+import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
+
 
 class Posts extends Component {
     state={
@@ -21,6 +23,8 @@ class Posts extends Component {
         errorMessage:''
            
     }
+
+    
     token=localStorage.getItem('token');
     userId=localStorage.getItem('userId');    
     authtoken=this.props.isAuthenticatedToken == null ? this.token:this.props.isAuthenticatedToken;
@@ -156,7 +160,7 @@ class Posts extends Component {
         
     }
     postSelectedHandler = (event,postId ) => {
-        this.props.history.push( '/posts/' + postId );
+        this.props.history.push('/posts/' + postId );
     }
     render(){
         
@@ -198,4 +202,4 @@ const mapDispatchToProps = dispatch => {
         onLoad:(activeMenu)=>dispatch({type:actionTypes.CHANGE_ACTIVE_STATE,ActiveState:activeMenu})
     };
 };
-export default connect(mapStateToProps,mapDispatchToProps)(Posts);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Posts));
