@@ -4,9 +4,17 @@ import Posts from './containers/Posts/Posts';
 import {connect} from 'react-redux';
 import {Route,Switch,Redirect} from 'react-router-dom';
 
-const LazyLogin = React.lazy(()=>import('./containers/Login/Login'));
-const LazyLogout = React.lazy(()=>import('./containers/Logout/Logout'));
-const LazyPostDetails = React.lazy(()=>import('./components/PostDetails/PostDetails'));
+
+const importPath={
+  loginPath:'./containers/Login/Login',
+  logoutPath:'./containers/Logout/Logout',
+  postDetailsPath:'./components/PostDetails/PostDetails'
+}
+
+const LazyLogin = React.lazy(()=>import(importPath.loginPath));
+const LazyLogout = React.lazy(()=>import(importPath.logoutPath));
+const LazyPostDetails = React.lazy(()=>import(importPath.postDetailsPath));
+
 const routeArr=[
   {to:'/posts',component:Posts,showOnAuth:true,showNotAuth:true},
   {to:'/posts/:id',component:LazyPostDetails,showOnAuth:true,showNotAuth:false},
